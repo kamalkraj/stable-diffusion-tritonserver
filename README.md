@@ -3,6 +3,8 @@
 
 ## Download models
 ```bash
+git clone https://github.com/kamalkraj/stable-diffusion-tritonserver.git
+cd stable-diffusion-tritonserver
 git lfs install
 git clone https://huggingface.co/kamalkraj/stable-diffusion-v1-4-onnx
 ```
