@@ -35,7 +35,7 @@ tritonserver --model-repository /models/
 
 ## Inference
 
-Install `tritonclient` and run the [notebook](Inference.ipynb)
+Install `tritonclient` and run the [notebook](Inference.ipynb) for inference.
 ```bash
 pip install "tritonclient[http]"
 ```
