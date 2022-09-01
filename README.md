@@ -39,3 +39,6 @@ Install `tritonclient` and run the [notebook](Inference.ipynb) for inference.
 ```bash
 pip install "tritonclient[http]"
 ```
+
+## Credits
+- ONNX conversion script from - [harishanand95/diffusers](https://github.com/harishanand95/diffusers/blob/dml/examples/inference/save_onnx.py)
