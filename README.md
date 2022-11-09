@@ -1,5 +1,7 @@
 # stable-diffusion-tritonserver
 
+Please checkout branch [v2](https://github.com/kamalkraj/stable-diffusion-tritonserver/tree/v2) for converting new models
+
 
 ## Download models
 ```bash
