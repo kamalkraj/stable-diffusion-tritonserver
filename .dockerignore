@@ -1,1 +1,3 @@
-stable-diffusion-v1-4-onnx
+stable-diffusion-onnx
+env
+models
