@@ -23,10 +23,15 @@ pip install -r requirements.txt
 ## Convert to onnx
 ```bash
 # run the conversion
-python convert_stable_diffusion_checkpoint_to_onnx.py --model_path nitrosocke/mo-di-diffusion--output_path stable-diffusion-onnx --opset 16 --fp16
+python convert_stable_diffusion_checkpoint_to_onnx.py --model_path runwayml/stable-diffusion-v1-5 --output_path stable-diffusion-onnx --opset 16 --fp16
 # Move the model weights
 bash copy_files.sh
 ```
+
+### Verified models with convertion script
+- runwayml/stable-diffusion-v1-5
+- CompVis/stable-diffusion-v1-4
+- nitrosocke/mo-di-diffusion
 
 
 ## Triton Inference Server
