@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+stable-diffusion*
+*.onnx
+models/stable_diffusion/1/tokenizer/*.json
+models/stable_diffusion/1/tokenizer/*.txt
+models/stable_diffusion/1/scheduler/*.json

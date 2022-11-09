@@ -1,0 +1,39 @@
+name: "stable_diffusion"
+max_batch_size: 0
+backend: "python"
+
+input [
+    {
+        name: "PROMPT"
+        data_type: TYPE_STRING
+        dims: [ -1 ]
+    },
+    {
+        name: "SAMPLES"
+        data_type: TYPE_INT32
+        dims: [ -1 ]
+    },
+    {
+        name: "STEPS"
+        data_type: TYPE_INT32
+        dims: [ -1 ]
+    },
+    {
+        name: "GUIDANCE_SCALE"
+        data_type: TYPE_FP32
+        dims: [ -1 ]
+    },
+    {
+        name: "SEED"
+        data_type: TYPE_INT64
+        dims: [ -1 ]
+    }
+]
+
+output [
+    {
+        name: "IMAGES"
+        data_type: TYPE_FP16
+        dims: [ -1 , -1, -1, -1]
+    }
+]
