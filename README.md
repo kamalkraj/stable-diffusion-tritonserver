@@ -23,16 +23,9 @@ pip install -r requirements.txt
 ## Convert to onnx
 ```bash
 # run the conversion
-python convert_stable_diffusion_checkpoint_to_onnx.py --model_path runwayml/stable-diffusion-v1-5 --output_path stable-diffusion-onnx --opset 16 --fp16
-```
-
-Move the model weights
-```bash
-cp stable-diffusion-onnx/tokenizer/* models/stable_diffusion/1/tokenizer/
-cp stable-diffusion-onnx/scheduler/* models/stable_diffusion/1/scheduler/
-cp stable-diffusion-onnx/text_encoder/model.onnx models/text_encoder/1
-cp stable-diffusion-onnx/unet/model.onnx models/unet/1/
-cp stable-diffusion-onnx/vae_decoder/model.onnx models/vae_decoder/1
+python convert_stable_diffusion_checkpoint_to_onnx.py --model_path nitrosocke/mo-di-diffusion--output_path stable-diffusion-onnx --opset 16 --fp16
+# Move the model weights
+bash copy_files.sh
 ```
 
 
