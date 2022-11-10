@@ -120,9 +120,9 @@ def convert_models(model_path: str, output_path: str, opset: int, fp16: bool = F
         ordered_input_names=["sample", "timestep", "encoder_hidden_states", "return_dict"],
         output_names=["out_sample"],  # has to be different from "sample" for correct tracing
         dynamic_axes={
-            "sample": {0: "batch", 1: "channels", 2: "height", 3: "width"},
-            "timestep": {0: "batch"},
-            "encoder_hidden_states": {0: "batch", 1: "sequence"},
+            "sample": [0,1,2,3],
+            "timestep": [0],
+            "encoder_hidden_states": [0,1],
         },
         opset=opset,
         use_external_data_format=True,  # UNet is > 2GB, so the weights need to be split
