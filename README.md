@@ -2,6 +2,7 @@
 
 Please checkout branch [v2](https://github.com/kamalkraj/stable-diffusion-tritonserver/tree/v2) for converting new models
 
+Please checkout branch [v3](https://github.com/kamalkraj/stable-diffusion-tritonserver/tree/v2) for converting models to TensorRT for fastest inference 
 
 ## Download models
 ```bash
