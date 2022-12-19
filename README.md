@@ -8,44 +8,39 @@ git clone https://github.com/kamalkraj/stable-diffusion-tritonserver.git
 cd stable-diffusion-tritonserver
 ```
 
-## Install
+## Build
 ```bash
-# create a virtualenv
-virtualenv env
-# activate
-source env/bin/activate
-# upgrade pip
-pip install -U pip
-# install libs
-pip install -r requirements.txt
+# Build Docker
+docker build -t  sd_trt .
 ```
 
-## Convert to onnx
+## Convert to TensorRT
 ```bash
 # run the conversion
-python convert_stable_diffusion_checkpoint_to_onnx.py --model_path runwayml/stable-diffusion-v1-5 --output_path stable-diffusion-onnx --opset 16 --fp16
-# Move the model weights
+docker run --gpus device=0 \
+           --ipc=host \
+           --ulimit memlock=-1 \
+           --ulimit stack=67108864 \
+           -v $(pwd)/engine:/workspace/TensorRT/demo/Diffusion/engine \
+           -v $(pwd)/onnx:/workspace/TensorRT/demo/Diffusion/onnx \
+           -v $(pwd)/output:/workspace/TensorRT/demo/Diffusion/output \
+           -it --rm sd_trt
+export HF_TOKEN=<your access token>
+cd demo/Diffusion/
+LD_PRELOAD=${PLUGIN_LIBS} python3 demo-diffusion.py "a beautiful photograph of Mt. Fuji during cherry blossom" --hf-token=$HF_TOKEN -v
+
+# Exit from the Docker and Move the model weights to tritonserver folder 
 bash copy_files.sh
 ```
 
-### Verified models with convertion script
-- runwayml/stable-diffusion-v1-5
-- CompVis/stable-diffusion-v1-4
-- nitrosocke/mo-di-diffusion
-
-
 ## Triton Inference Server
 
-### Build
-```bash
-docker build -t tritonserver .
-```
-
 ### Run
-```
-docker run -it --rm --gpus all -p8000:8000 -p8001:8001 -p8002:8002 --shm-size 16384m   \
--v $PWD/models:/models tritonserver \
-tritonserver --model-repository /models/
+```bash
+docker run -it --rm --gpus device=0 -p8000:8000 -p8001:8001 -p8002:8002 --shm-size 16384m   \
+-v $PWD/models:/models sd_trt bash
+# run the server
+LD_PRELOAD=${PLUGIN_LIBS} tritonserver --model-repository /models/
 ```
 
 
@@ -53,8 +48,8 @@ tritonserver --model-repository /models/
 
 Install `tritonclient` and run the [notebook](Inference.ipynb) for inference.
 ```bash
-pip install "tritonclient[http]"
+pip install "tritonclient[http]==2.28.0"
 ```
 
 ## Credits
-- ONNX conversion script from - [harishanand95/diffusers](https://github.com/harishanand95/diffusers/blob/dml/examples/inference/save_onnx.py) and [huggingface](https://github.com/huggingface/diffusers)
+- TRT conversion script from - [NVIDIA/TensorRT](https://github.com/NVIDIA/TensorRT/tree/main/demo/Diffusion).

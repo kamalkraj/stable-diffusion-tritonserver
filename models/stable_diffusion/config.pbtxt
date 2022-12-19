@@ -9,6 +9,11 @@ input [
         dims: [ -1 ]
     },
     {
+        name: "NEGATIVE_PROMPT"
+        data_type: TYPE_STRING
+        dims: [ -1 ]
+    },
+    {
         name: "SAMPLES"
         data_type: TYPE_INT32
         dims: [ -1 ]

@@ -1,6 +1,0 @@
-git+https://github.com/huggingface/diffusers@0248541deadfa187150fe7f96a575ff905ecddd7
-torch==1.12.1
-tritonclient[http]==2.27.0
-transformers==4.24.0
-onnx==1.12.0
-onnxruntime==1.13.1

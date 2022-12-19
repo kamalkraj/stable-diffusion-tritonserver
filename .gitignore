@@ -133,3 +133,5 @@ stable-diffusion*
 models/stable_diffusion/1/tokenizer/*.json
 models/stable_diffusion/1/tokenizer/*.txt
 models/stable_diffusion/1/scheduler/*.json
+*.plan
+*.png

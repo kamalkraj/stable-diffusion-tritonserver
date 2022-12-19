@@ -1,7 +1,27 @@
-FROM nvcr.io/nvidia/tritonserver:22.10-py3
+FROM nvcr.io/nvidia/tritonserver:22.11-py3
 
-RUN pip install -U pip
+WORKDIR /workspace
 
-RUN pip install torch==1.12.1
+RUN apt-get update && apt-get install cmake -y
 
-RUN pip install --upgrade git+https://github.com/huggingface/diffusers@0248541deadfa187150fe7f96a575ff905ecddd7 scipy==1.9.3 transformers==4.24.0
+RUN pip install --upgrade pip && pip install --upgrade tensorrt
+
+RUN git clone https://github.com/NVIDIA/TensorRT.git -b main --single-branch \
+    && cd TensorRT \
+    && git submodule update --init --recursive
+
+ENV TRT_OSSPATH=/workspace/TensorRT
+WORKDIR ${TRT_OSSPATH}
+
+RUN mkdir -p build \
+    && cd build \
+    && cmake .. -DTRT_OUT_DIR=$PWD/out \
+    && cd plugin \
+    && make -j$(nproc)
+
+ENV PLUGIN_LIBS="${TRT_OSSPATH}/build/out/libnvinfer_plugin.so"
+
+RUN cd demo/Diffusion/ \
+    && mkdir -p onnx engine output
+
+RUN pip3 install -r demo/Diffusion/requirements.txt
