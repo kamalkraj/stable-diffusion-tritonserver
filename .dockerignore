@@ -1,3 +1,5 @@
 stable-diffusion-onnx
 env
 models
+engine
+onnx
