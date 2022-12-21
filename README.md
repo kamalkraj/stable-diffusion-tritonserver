@@ -40,7 +40,7 @@ bash copy_files.sh
 docker run -it --rm --gpus device=0 -p8000:8000 -p8001:8001 -p8002:8002 --shm-size 16384m   \
 -v $PWD/models:/models sd_trt bash
 # run the server
-LD_PRELOAD=${PLUGIN_LIBS} tritonserver --model-repository /models/
+LD_PRELOAD=${PLUGIN_LIBS} CUDA_MODULE_LOADING=LAZY tritonserver --model-repository /models/ --model-control-mode=explicit
 ```
 
 
