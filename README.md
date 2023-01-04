@@ -39,6 +39,8 @@ bash copy_files.sh
 ```bash
 docker run -it --rm --gpus device=0 -p8000:8000 -p8001:8001 -p8002:8002 --shm-size 16384m   \
 -v $PWD/models:/models sd_trt bash
+# Install 0.8.1 to get DPMSolverMultistepScheduler
+pip install diffusers==0.8.1
 # run the server
 LD_PRELOAD=${PLUGIN_LIBS} CUDA_MODULE_LOADING=LAZY tritonserver --model-repository /models/ --model-control-mode=explicit
 ```

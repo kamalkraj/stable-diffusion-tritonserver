@@ -29,10 +29,11 @@ import torch
 from transformers import CLIPTokenizer
 from diffusers.schedulers import (
     DDIMScheduler,
-    PNDMScheduler,
-    LMSDiscreteScheduler,
-    EulerDiscreteScheduler,
+    DPMSolverMultistepScheduler,
     EulerAncestralDiscreteScheduler,
+    EulerDiscreteScheduler,
+    LMSDiscreteScheduler,
+    PNDMScheduler,
 )
 
 
@@ -52,6 +53,7 @@ class TritonPythonModel:
         LMSDiscreteScheduler,
         EulerDiscreteScheduler,
         EulerAncestralDiscreteScheduler,
+        DPMSolverMultistepScheduler,
     ]
     height: int
     width: int
@@ -67,9 +69,8 @@ class TritonPythonModel:
         current_name: str = str(Path(args["model_repository"]).parent.absolute())
         self.device = "cpu" if args["model_instance_kind"] == "CPU" else "cuda"
         self.tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-large-patch14")
-        self.scheduler = PNDMScheduler.from_config(
-            current_name + "/stable_diffusion/1/scheduler/"
-        )
+        self.scheduler_config_path = current_name + "/stable_diffusion/1/scheduler/"
+        self.scheduler = DPMSolverMultistepScheduler.from_config(self.scheduler_config_path)
 
         self.height = 512
         self.width = 512
@@ -105,6 +106,16 @@ class TritonPythonModel:
                 .as_numpy()
                 .tolist()
             ][0]
+            scheduler = [
+                t.decode("UTF-8")
+                for t in pb_utils.get_input_tensor_by_name(request, "SCHEDULER")
+                .as_numpy()
+                .tolist()
+            ][0]
+            if scheduler.__class__.__name__ != scheduler:
+                self.scheduler = eval(
+                    f"{scheduler}.from_config(self.scheduler_config_path)"
+                )
             self.num_inference_steps = [
                 t
                 for t in pb_utils.get_input_tensor_by_name(request, "STEPS")
