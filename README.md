@@ -43,7 +43,7 @@ docker build -t tritonserver .
 
 ### Run
 ```
-docker run -it --rm --gpus all -p8000:8000 -p8001:8001 -p8002:8002 --shm-size 16384m   \
+docker run -it --rm --gpus device=0 -p8000:8000 -p8001:8001 -p8002:8002 --shm-size 16384m   \
 -v $PWD/models:/models tritonserver \
 tritonserver --model-repository /models/
 ```

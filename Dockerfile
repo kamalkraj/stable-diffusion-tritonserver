@@ -1,7 +1,7 @@
-FROM nvcr.io/nvidia/tritonserver:22.10-py3
+FROM nvcr.io/nvidia/tritonserver:22.12-py3
 
 RUN pip install -U pip
 
-RUN pip install torch==1.12.1
+RUN pip install torch==1.13.1
 
-RUN pip install --upgrade git+https://github.com/huggingface/diffusers@0248541deadfa187150fe7f96a575ff905ecddd7 scipy==1.9.3 transformers==4.24.0
+RUN pip install --upgrade diffusers==0.11.1 transformers==4.25.1
