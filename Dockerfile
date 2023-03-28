@@ -4,9 +4,9 @@ WORKDIR /workspace
 
 RUN apt-get update && apt-get install cmake -y
 
-RUN pip install --upgrade pip && pip install --upgrade tensorrt
+RUN pip install --upgrade pip && pip install --upgrade tensorrt==8.5.3.1
 
-RUN git clone https://github.com/NVIDIA/TensorRT.git -b main --single-branch \
+RUN git clone https://github.com/NVIDIA/TensorRT.git -b release/8.5 --single-branch \
     && cd TensorRT \
     && git submodule update --init --recursive
 
