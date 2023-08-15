@@ -70,7 +70,7 @@ class TritonPythonModel:
         self.device = "cpu" 
         if args["model_instance_kind"] == "CPU":
             self.device = "cpu"
-        else 
+        else: 
             self.device = f"cuda:{model_instance_device_id}"
         self.tokenizer = CLIPTokenizer.from_pretrained(
             current_name + "/stable_diffusion/1/tokenizer/"
