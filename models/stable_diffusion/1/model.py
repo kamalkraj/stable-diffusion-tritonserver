@@ -67,7 +67,11 @@ class TritonPythonModel:
         :param args: arguments from Triton config file
         """
         current_name: str = str(Path(args["model_repository"]).parent.absolute())
-        self.device = "cpu" if args["model_instance_kind"] == "CPU" else "cuda"
+        self.device = "cpu" 
+        if args["model_instance_kind"] == "CPU":
+            self.device = "cpu"
+        else 
+            self.device = f"cuda:{model_instance_device_id}"
         self.tokenizer = CLIPTokenizer.from_pretrained(
             current_name + "/stable_diffusion/1/tokenizer/"
         )
